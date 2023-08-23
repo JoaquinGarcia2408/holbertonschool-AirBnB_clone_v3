@@ -79,7 +79,9 @@ class DBStorage:
         """A method to retrieve one object"""
         if cls and id:
             obj = self.all(cls).values()
-            return obj
+            for obj in objs:
+                if obj.id == id:
+                    return obj
         return None
 
     def count(self, cls=None):

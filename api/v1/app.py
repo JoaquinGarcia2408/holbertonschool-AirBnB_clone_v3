@@ -4,6 +4,8 @@ This module contains the principal application
 """
 from api.v1.views import app_views
 from flask import Flask
+from flask import jsonify
+from flask import make_response
 from models import storage
 from os import getenv
 
@@ -15,6 +17,12 @@ app.register_blueprint(app_views)
 def db_close(obj):
     """ calls methods close() """
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_foun(error):
+    """ Loads a custom 404 page not found """
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
